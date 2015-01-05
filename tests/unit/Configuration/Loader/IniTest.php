@@ -9,7 +9,7 @@ class IniTest extends \PHPUnit_Framework_TestCase
     /**
      * Load() test
      */
-    public function testParseUrl()
+    public function testLoad()
     {
         $loader = new Ini(__DIR__.'/IniTest.ini');
         
