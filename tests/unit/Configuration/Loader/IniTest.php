@@ -1,6 +1,7 @@
 <?php
 
 use CyrilPerrin\Spine\Configuration\Loader\Ini;
+
 /**
  * Configuration INI loader test
  */
