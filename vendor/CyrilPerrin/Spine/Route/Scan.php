@@ -15,9 +15,15 @@ class Scan extends Route
     
     /** @var $_controllerName string controller name */
     private $_controllerName;
+    
+    /** @var $_imposedControllerName imposed controller name ? */
+    private $_imposedControllerName;
 
     /** @var $_actionName string action name */
     private $_actionName;
+    
+    /** @var $_imposedActionName imposed action name ? */
+    private $_imposedActionName;
     
     /** @var $_parameters array parameters */
     private $_parameters;
@@ -41,6 +47,18 @@ class Scan extends Route
         $this->_controllerName = $controllerName;
         $this->_actionName = $actionName;
         $this->_parameters = $parameters;
+        
+        // Imposed controller and action name ?
+        if (strpos($pattern, ':controller') === false) {
+            $this->_imposedControllerName = true;
+        } else {
+            $this->_imposedControllerName = false;
+        }
+        if (strpos($pattern, ':action') === false) {
+            $this->_imposedActionName = true;
+        } else {
+            $this->_imposedActionName = false;
+        }
         
         // Build pattern
         $this->_order = array();
@@ -110,7 +128,7 @@ class Scan extends Route
     public function buildUrl($controllerName,$actionName,$parameters=array())
     {
         // Same controller name ?
-        if (isset($this->_controllerName)) {
+        if ($this->_imposedControllerName && isset($this->_controllerName)) {
             if ($this->_controllerName != $controllerName) {
                 return null;
             }
@@ -122,7 +140,7 @@ class Scan extends Route
         );
         
         // Same action name ?
-        if (isset($this->_actionName)) {
+        if ($this->_imposedActionName && isset($this->_actionName)) {
             if ($this->_actionName != $actionName) {
                 return null;
             }
