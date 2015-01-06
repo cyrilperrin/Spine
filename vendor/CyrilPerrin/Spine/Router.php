@@ -18,9 +18,9 @@ class Router
         // Default URL base
         if (isset($_SERVER['REQUEST_URI'])) {
             $urlBase = substr(
-                $_SERVER['SCRIPT_NAME'], 0,
-                strrpos($_SERVER['REQUEST_URI'], '/')
-            ).'/';
+                $_SERVER['REQUEST_URI'], 0,
+                strrpos($_SERVER['SCRIPT_NAME'], '/')
+            );
         } else {
             $urlBase = '';
         }
