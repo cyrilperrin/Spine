@@ -114,33 +114,33 @@ abstract class Controller
         // Set view's action name
         $this->_view->setActionName($actionName);
         
+        // Turn on output buffering
+        ob_start();
+        
         // Run action
         try {
-            // Turn on output buffering
-            ob_start();
-            
             // Call method
             call_user_func(array($this,$actionName.'Action'));
-            
-            // Get buffer content
-            $content = ob_get_clean();
-            
-            // Set response's content if necessary
-            if ($content != null) {
-                $this->_response->setContent($content);
-            }
         } catch (Interruption $exception) {
-            // Clean buffer content
-            ob_clean();
+            // Stop output buffering
+            ob_end_clean();
             
             // Throw exception
             throw $exception;
         } catch (\Exception $exception) {
-            // Clean buffer content
-            ob_clean();
+            // Stop output buffering
+            ob_end_clean();
             
             // Throw exception
             throw new Error($this->_application, null, 500, $exception);
+        }
+            
+        // Get buffer content
+        $content = ob_get_clean();
+        
+        // Set response's content if necessary
+        if ($content != null) {
+            $this->_response->setContent($content);
         }
         
         // Return response

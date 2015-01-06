@@ -95,14 +95,14 @@ class Layout extends View
             // Render view
             $this->_view->render();
         } catch (Interruption $exception) {
-            // Clean buffer content
-            ob_clean();
+            // Stop output buffering
+            ob_end_clean();
             
             // Throw exception
             throw $exception;
         } catch (\Exception $exception) {
-            // Clean buffer content
-            ob_clean();
+            // Stop output buffering
+            ob_end_clean();
             
             // Throw exception
             throw new Error($this->_application, null, 500, $exception);
