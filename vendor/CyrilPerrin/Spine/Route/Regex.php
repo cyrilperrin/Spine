@@ -227,7 +227,6 @@ class Regex extends Route
             '-', array_map('lcfirst', explode('/', $controllerName))
         );
         
-        
         // Same action name ?
         if (isset($this->_actionName)) {
             if ($this->_actionName != $actionName) {
