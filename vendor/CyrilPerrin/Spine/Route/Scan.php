@@ -89,11 +89,7 @@ class Scan extends Route
             switch ($parameterName) {
                 case 'controller':
                     $controllerName = implode(
-                        '/', array_map(
-                            'ucfirst', preg_split(
-                                '/[-_]/', $parameterValue
-                            )
-                        )
+                        '/', array_map('ucfirst', explode('-', $parameterValue))
                     );
                     break;
                 case 'action':
