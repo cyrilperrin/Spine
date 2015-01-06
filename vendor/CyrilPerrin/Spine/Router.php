@@ -3,7 +3,6 @@
 namespace CyrilPerrin\Spine;
 
 use CyrilPerrin\Spine\Route\Regex;
-use CyrilPerrin\Spine\Router\Loader;
 
 /**
  * Router
@@ -52,17 +51,6 @@ class Router
     public function getRoutes()
     {
         return $this->_routes;
-    }
-    
-    /**
-     * Load routes
-     * @param $loader \CyrilPerrin\Spine\Router\Loader loader
-     */
-    public function loadRoutes(Loader $loader)
-    {
-        foreach ($loader->getRoutes() as $route) {
-            $this->_routes[] = $route;
-        }
     }
     
     /**
