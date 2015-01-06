@@ -13,7 +13,7 @@ class ScanTest extends \PHPUnit_Framework_TestCase
     public function testParseUrl()
     {
         // Build route
-        $route = new Scan('/user-management/view/:id', 'User/Management', 'view', array('id' => '%u'));
+        $route = new Scan('/user-management/view/:id', 'User/Management', 'view', array(), array('id' => '%u'));
 
         // Parse unvalid URLs
         $this->assertNull($route->parseUrl('something'));
@@ -43,7 +43,7 @@ class ScanTest extends \PHPUnit_Framework_TestCase
     public function testBuildUrl()
     {
         // Build route
-        $route = new Scan('/user-management/view/:id', 'User/Management', 'view', array('id' => '%u'));
+        $route = new Scan('/user-management/view/:id', 'User/Management', 'view', array(), array('id' => '%u'));
         
         // Build URL with invalid parameters
         $url = $route->buildUrl('Something', 'view', array());

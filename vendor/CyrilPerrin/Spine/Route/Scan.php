@@ -19,6 +19,9 @@ class Scan extends Route
     /** @var $_actionName string action name */
     private $_actionName;
     
+    /** @var $_parameters array parameters */
+    private $_parameters;
+    
     /** @var $_order array parameters order */
     private $_order;
     
@@ -27,15 +30,17 @@ class Scan extends Route
      * @param $pattern string pattern
      * @param $controllerName string controller name
      * @param $actionName string action name
+     * @param $parameters array parameters
      * @param $constraints array constraints on parameters
      */
     public function __construct($pattern,$controllerName=null,$actionName=null,
-        $constraints=array())
+        $parameters=array(),$constraints=array())
     {
         // Save pattern and parameters
         $this->_pattern = $pattern;
         $this->_controllerName = $controllerName;
         $this->_actionName = $actionName;
+        $this->_parameters = $parameters;
         
         // Build pattern
         $this->_order = array();
@@ -70,7 +75,7 @@ class Scan extends Route
         // Get parameters, controller name and action name
         $controllerName = $this->_controllerName;
         $actionName = $this->_actionName;
-        $parameters = array();
+        $parameters = $this->_parameters;
         foreach ($parametersValues as $parameterOrder => $parameterValue) {
             // Get parameter name
             $parameterName = $this->_order[$parameterOrder];
@@ -116,8 +121,9 @@ class Scan extends Route
         }
         
         // Change controller's name case and replace "/" character
-        $controllerName = str_replace('/', '-', $controllerName);
-        $controllerName = strtolower($controllerName);
+        $controllerName = implode(
+            '-', array_map('lcfirst', explode('/', $controllerName))
+        );
         
         // Same action name ?
         if (isset($this->_actionName)) {
@@ -125,6 +131,9 @@ class Scan extends Route
                 return null;
             }
         }
+        
+        // Merge route parameters and given parameters
+        $parameters = array_merge($this->_parameters, $parameters);
         
         // Build/Return URL
         $arguments = array($this->_pattern);

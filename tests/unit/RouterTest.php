@@ -22,9 +22,15 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $router->addRoute(new Literal('/user/logout', 'User', 'logout'));
         $router->addRoute(new Literal('/user-management', 'User/Management', 'index'));
         $router->addRoute(new Literal('/user-management/add', 'User/Management', 'add'));
-        $router->addRoute(new Scan('/user-management/view/:id', 'User/Management', 'view', array('id' => '%u')));
-        $router->addRoute(new Scan('/user-management/edit/:id', 'User/Management', 'edit', array('id' => '%u')));
-        $router->addRoute(new Scan('/user-management/delete/:id', 'User/Management', 'delete', array('id' => '%u')));
+        $router->addRoute(
+            new Scan('/user-management/view/:id', 'User/Management', 'view', array(), array('id' => '%u'))
+        );
+        $router->addRoute(
+            new Scan('/user-management/edit/:id', 'User/Management', 'edit', array(), array('id' => '%u'))
+        );
+        $router->addRoute(
+            new Scan('/user-management/delete/:id', 'User/Management', 'delete', array(), array('id' => '%u'))
+        );
         
         // Parse unvalid URLs
         $this->assertNull($router->parseUrl(''));
@@ -97,9 +103,15 @@ class RouterTest extends \PHPUnit_Framework_TestCase
         $router->addRoute(new Literal('/user/logout', 'User', 'logout'));
         $router->addRoute(new Literal('/user-management', 'User/Management', 'index'));
         $router->addRoute(new Literal('/user-management/add', 'User/Management', 'add'));
-        $router->addRoute(new Scan('/user-management/view/:id', 'User/Management', 'view', array('id' => '%u')));
-        $router->addRoute(new Scan('/user-management/edit/:id', 'User/Management', 'edit', array('id' => '%u')));
-        $router->addRoute(new Scan('/user-management/delete/:id', 'User/Management', 'delete', array('id' => '%u')));
+        $router->addRoute(
+            new Scan('/user-management/view/:id', 'User/Management', 'view', array(), array('id' => '%u'))
+        );
+        $router->addRoute(
+            new Scan('/user-management/edit/:id', 'User/Management', 'edit', array(), array('id' => '%u'))
+        );
+        $router->addRoute(
+            new Scan('/user-management/delete/:id', 'User/Management', 'delete', array(), array('id' => '%u'))
+        );
         
         // Build URLs with unvalid parameters
         $this->assertNull($router->buildUrl('Something', 'something'));

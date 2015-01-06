@@ -93,6 +93,31 @@ class RegexTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('User/Management', $request->getControllerName());
         $this->assertEquals('view', $request->getActionName());
         $this->assertEquals(array('id' => '548'), $request->getParameters());
+        
+        $request = $route->parseUrl('/userManagement');
+        $this->assertEquals('UserManagement', $request->getControllerName());
+        $this->assertEquals('index', $request->getActionName());
+        $this->assertEmpty($request->getParameters());
+        
+        $request = $route->parseUrl('/userManagement/add');
+        $this->assertEquals('UserManagement', $request->getControllerName());
+        $this->assertEquals('add', $request->getActionName());
+        $this->assertEmpty($request->getParameters());
+        
+        $request = $route->parseUrl('/userManagement/view/id/198');
+        $this->assertEquals('UserManagement', $request->getControllerName());
+        $this->assertEquals('view', $request->getActionName());
+        $this->assertEquals(array('id' => '198'), $request->getParameters());
+        
+        $request = $route->parseUrl('/userManagement/view/id/205');
+        $this->assertEquals('UserManagement', $request->getControllerName());
+        $this->assertEquals('view', $request->getActionName());
+        $this->assertEquals(array('id' => '205'), $request->getParameters());
+        
+        $request = $route->parseUrl('/userManagement/view/id/548');
+        $this->assertEquals('UserManagement', $request->getControllerName());
+        $this->assertEquals('view', $request->getActionName());
+        $this->assertEquals(array('id' => '548'), $request->getParameters());
     }
 
 
@@ -153,6 +178,21 @@ class RegexTest extends \PHPUnit_Framework_TestCase
 
         $url = $route->buildUrl('User/Management', 'delete', array('id' => '20'));
         $this->assertEquals('/user-management/delete/id/20', $url);
+
+        $url = $route->buildUrl('UserManagement', 'index');
+        $this->assertEquals('/userManagement/index', $url);
+
+        $url = $route->buildUrl('UserManagement', 'add');
+        $this->assertEquals('/userManagement/add', $url);
+
+        $url = $route->buildUrl('UserManagement', 'view', array('id' => '5'));
+        $this->assertEquals('/userManagement/view/id/5', $url);
+
+        $url = $route->buildUrl('UserManagement', 'edit', array('id' => '10'));
+        $this->assertEquals('/userManagement/edit/id/10', $url);
+
+        $url = $route->buildUrl('UserManagement', 'delete', array('id' => '20'));
+        $this->assertEquals('/userManagement/delete/id/20', $url);
     }
 
 }

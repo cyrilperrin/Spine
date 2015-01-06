@@ -72,8 +72,8 @@ class Regex extends Route
         if (isset($parameters['controller'])) {
             $controllerName = implode(
                 '/', array_map(
-                    'ucfirst', preg_split(
-                        '/[-_]/', $parameters['controller']
+                    'ucfirst', explode(
+                        '-', $parameters['controller']
                     )
                 )
             );
@@ -223,8 +223,10 @@ class Regex extends Route
         }
         
         // Change controller's name case and replace "/" character
-        $controllerName = str_replace('/', '-', $controllerName);
-        $controllerName = strtolower($controllerName);
+        $controllerName = implode(
+            '-', array_map('lcfirst', explode('/', $controllerName))
+        );
+        
         
         // Same action name ?
         if (isset($this->_actionName)) {
