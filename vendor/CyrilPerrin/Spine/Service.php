@@ -33,7 +33,7 @@ abstract class Service
         } else {
             // Check if service exists
             if (!class_exists('\Services\\'.$serviceName)) {
-                throw new Error($this->_application, 500);
+                throw new Error($application, null, 500);
             }
 
             try {
@@ -54,7 +54,7 @@ abstract class Service
                 throw $exception;
             } catch (\Exception $exception) {
                 // Throw exception
-                throw new Error($this->_application, null, 500, $exception);
+                throw new Error($application, null, 500, $exception);
             }
     
             // Save service
@@ -86,7 +86,7 @@ abstract class Service
                 throw $exception;
             } catch (\Exception $exception) {
                 // Throw exception
-                throw new Error($this->_application, null, 500, $exception);
+                throw new Error($application, null, 500, $exception);
             }
         }
         
@@ -115,7 +115,7 @@ abstract class Service
                 throw $exception;
             } catch (\Exception $exception) {
                 // Throw exception
-                throw new Error($this->_application, null, 500, $exception);
+                throw new Error($application, null, 500, $exception);
             }
         }
         
@@ -145,9 +145,7 @@ abstract class Service
                         throw $exception;
                     } catch (\Exception $exception) {
                         // Throw exception
-                        throw new Error(
-                            $this->_application, null, 500, $exception
-                        );
+                        throw new Error($application, null, 500, $exception);
                     }
                 }
             }

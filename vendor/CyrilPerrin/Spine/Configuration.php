@@ -69,7 +69,7 @@ class Configuration
     {
         $data = $loader->getData($environment);
         foreach ($data as $key => $value) {
-            $this->_data[$key] = $data;
+            $this->_data[$key] = $value;
         }
     }
     

@@ -17,10 +17,15 @@ class Router
     {
         // Default URL base
         if (isset($_SERVER['REQUEST_URI'])) {
-            $urlBase = substr(
-                $_SERVER['REQUEST_URI'], 0,
-                strrpos($_SERVER['SCRIPT_NAME'], '/')
-            );
+            $urlBase = '';
+            for ($i=0,$j=1;isset($_SERVER['REQUEST_URI'][$j]);$i++,$j++) {
+                if ($_SERVER['REQUEST_URI'][$j] ==
+                    $_SERVER['SCRIPT_NAME'][$j]) {
+                    $urlBase .= $_SERVER['REQUEST_URI'][$i];
+                } else {
+                    break;
+                }
+            }
         } else {
             $urlBase = '';
         }
@@ -72,6 +77,7 @@ class Router
     
     /**
      * Get URL base
+     * @return string URL base
      */
     public function getUrlBase()
     {
@@ -95,7 +101,7 @@ class Router
     public function parseUrl($url)
     {
         // Resize URL
-        if (strpos($url, $this->_urlBase) === 0) {
+        if ($this->_urlBase !== '' && strpos($url, $this->_urlBase) === 0) {
             $url = substr($url, strlen($this->_urlBase));
         }
         

@@ -79,6 +79,30 @@ abstract class View
     }
     
     /**
+     * Get URL base
+     * @return string URL base
+     */
+    public function getUrlBase()
+    {
+        return $this->_application->getRouter()->getUrlBase();
+    }
+    
+    /**
+     * Build URL
+     * @param $controllerName string controller name
+     * @param $actionName string action name
+     * @param $parameters array parameters
+     */
+    public function buildUrl($controllerName,$actionName,$parameters=array())
+    {
+        return $this->_application->getRouter()->buildUrl(
+            $controllerName,
+            $actionName,
+            $parameters
+        );
+    }
+    
+    /**
      * Magic getter
      * @param $name string name
      * @return mixed value
