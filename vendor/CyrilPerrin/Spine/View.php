@@ -43,9 +43,10 @@ abstract class View
      * Call action
      * @param $controllerName string controller name
      * @param $actionName string action name
+     * @param $parameters array parameters
      * @throws \CyrilPerrin\Spine\Interruption
      */
-    public function action($controllerName, $actionName, $parameters=array())
+    public function call($controllerName, $actionName, $parameters=array())
     {
         // Create request
         $request = new Request($controllerName, $actionName, $parameters);
@@ -58,7 +59,7 @@ abstract class View
         // Run action
         $response = $controller->run($actionName);
         
-        // Echo response's content
+        // Echo response content
         echo $response->getContent();
     }
     

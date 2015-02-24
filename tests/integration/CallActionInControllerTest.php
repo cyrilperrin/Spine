@@ -5,9 +5,9 @@ use CyrilPerrin\Spine\Request;
 use CyrilPerrin\Spine\Router;
 
 /**
- * Tests about calling action in action view
+ * Controller wich call action in controller
  */
-class CallActionInActionViewTest extends \PHPUnit_Framework_TestCase
+class CallActionInControllerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test calling "HelloWorld" controller
@@ -15,7 +15,7 @@ class CallActionInActionViewTest extends \PHPUnit_Framework_TestCase
     public function testCallHelloWorldController()
     {
         $application = new Application(null, null, __DIR__.'/../application');
-        $request = new Request('CallActionInActionView', 'callHelloWorldController');
+        $request = new Request('CallActionInController', 'callHelloWorldController');
         $response = $application->run($request);
         $this->assertEquals('Hello world!', $response->getContent());
         $this->assertEquals(200, $response->getStatusCode());
@@ -27,7 +27,7 @@ class CallActionInActionViewTest extends \PHPUnit_Framework_TestCase
     public function testCallInexistantController()
     {
         $application = new Application(null, null, __DIR__.'/../application');
-        $request = new Request('CallActionInActionView', 'callInexistantController');
+        $request = new Request('CallActionInController', 'callInexistantController');
         $response = $application->run($request);
         $this->assertEquals('Not Found', $response->getContent());
         $this->assertEquals(404, $response->getStatusCode());

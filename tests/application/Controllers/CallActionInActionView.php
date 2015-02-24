@@ -10,9 +10,17 @@ use CyrilPerrin\Spine\Controller;
 class CallActionInActionView extends Controller
 {
     /**
-     * Action wich call action in action view
+     * Action view wich call "HelloWorld" controller
      */
-    public function callActionInActionViewAction()
+    public function callHelloWorldControllerAction()
+    {
+        $this->_view->render();
+    }
+    
+    /**
+     * Action view wich call an inexistant controller
+     */
+    public function callInexistantControllerAction()
     {
         $this->_view->render();
     }

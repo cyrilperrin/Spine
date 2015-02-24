@@ -148,6 +148,32 @@ abstract class Controller
     }
     
     /**
+     * Call an action
+     * @param $controllerName string controller name
+     * @param $actionName string action name
+     * @param $parameters array parameters
+     * @return string response content
+     */
+    protected function call($controllerName,$actionName,$parameters=array())
+    {
+        // Create request
+        $request = new Request(
+            $controllerName, $actionName, $parameters
+        );
+        
+        // Get controller
+        $controller = Controller::getInstance(
+            $this->_application, $request
+        );
+        
+        // Run controller
+        $response = $controller->run();
+        
+        // Return response content
+        return $response->getContent();
+    }
+    
+    /**
      * Forward request
      * @param $controllerName string controller name
      * @param $actionName string action name

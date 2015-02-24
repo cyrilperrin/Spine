@@ -5,7 +5,7 @@ use CyrilPerrin\Spine\Request;
 use CyrilPerrin\Spine\Router;
 
 /**
- * Tests about forward
+ * Tests about forwarding
  */
 class ForwardTest extends \PHPUnit_Framework_TestCase
 {

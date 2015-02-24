@@ -19,11 +19,8 @@ class Request
     /** @var $_parameters array parameters */
     private $_parameters;
     
-    /** @var $_getParameters array GET parameters */
-    private $_getParameters;
-    
-    /** @var $_postParameters array POST parameters */
-    private $_postParameters;
+    /** @var $_type string type */
+    private $_type;
     
     /**
      * Get instance from globals
@@ -38,14 +35,20 @@ class Request
         // Check if request is not null
         if ($request != null) {
             // Set GET parameters
-            if (is_array($_GET)) {
-                $request->setGetParameters($_GET);
+            if (!empty($_GET)) {
+                foreach ($_GET as $key => $value) {
+                    $this->_parameters[$key] = $value;
+                }
             }
             
             // Set POST parameters
-            if (is_array($_POST)) {
-                $request->setPostParameters($_POST);
+            if (!empty($_POST)) {
+                foreach ($_POST as $key => $value) {
+                    $this->_parameters[$key] = $value;
+                }
             }
+            
+            // Set type
         }
         
         // Return request
@@ -57,17 +60,14 @@ class Request
      * @param $controllerName string controller name
      * @param $actionName string action name 
      * @param $parameters array parameters
-     * @param $getParameters array GET parameters
-     * @param $postParameters array POST parameters
      */
     public function __construct($controllerName,$actionName,$parameters=array(),
-        $getParameters=array(),$postParameters=array())
+        $type='GET')
     {
         $this->_controllerName = $controllerName;
         $this->_actionName = $actionName;
         $this->_parameters = $parameters;
-        $this->_getParameters = $getParameters;
-        $this->_postParameters = $postParameters;
+        $this->_type = $type;
     }
     
     /**
@@ -150,88 +150,21 @@ class Request
     }
     
     /**
-     * Get GET parameters
-     * @return array GET parameters
+     * Get type
+     * @return string type
      */
-    public function getGetParameters()
+    public function getType()
     {
-        return $this->_getParameters;
+        return $this->_type;
     }
     
     /**
-     * Set new GET parameters
-     * @param array $parameters new GET parameters
+     * Check type
+     * @param $type string type
+     * @return string true if type match
      */
-    public function setGetParameters($parameters)
+    public function is($type)
     {
-        $this->_getParameters = $parameters;
-    }
-    
-    /**
-     * Get GET parameter value
-     * @param $name string GET parameter name
-     * @param $default string returned value if GET parameter is not set
-     * @return string GET parameter value
-     */
-    public function getGetParameter($name,$default=null)
-    {
-        if (isset($this->_getParameters[$name])) {
-            return $this->_getParameters[$name];
-        } else {
-            return $default;
-        }
-    }
-    
-    /**
-     * Set GET parameter
-     * @param $name string GET parameter name
-     * @param $value string GET parameter value
-     */
-    public function setGetParameter($name,$value)
-    {
-        $this->_getParameters[$name] = $value;
-    }
-    
-    /**
-     * get POST parameters
-     * @return array POST parameters
-     */
-    public function getPostParameters()
-    {
-        return $this->_postParameters;
-    }
-    
-    /**
-     * Set new POST parameters
-     * @param array $parameters new POST parameters
-     */
-    public function setPostParameters($parameters)
-    {
-        $this->_postParameters = $parameters;
-    }
-    
-    /**
-     * Get POST parameter value
-     * @param $name string POST parameter name
-     * @param $default string returned value if POST parameter is not set
-     * @return string POST parameter value
-     */
-    public function getPostParameter($name,$default=null)
-    {
-        if (isset($this->_postParameters[$name])) {
-            return $this->_postParameters[$name];
-        } else {
-            return $default;
-        }
-    }
-    
-    /**
-     * Set POST parameter
-     * @param $name string POST parameter name
-     * @param $value string POST parameter value
-     */
-    public function setPostParameter($name,$value)
-    {
-        $this->_postParameters[$name] = $value;
+        return $this->_type == $type;
     }
 }
