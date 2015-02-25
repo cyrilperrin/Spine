@@ -37,18 +37,21 @@ class Request
             // Set GET parameters
             if (!empty($_GET)) {
                 foreach ($_GET as $key => $value) {
-                    $this->_parameters[$key] = $value;
+                    $request->setParameter($key, $value);
                 }
             }
             
             // Set POST parameters
             if (!empty($_POST)) {
                 foreach ($_POST as $key => $value) {
-                    $this->_parameters[$key] = $value;
+                    $request->setParameter($key, $value);
                 }
             }
             
             // Set type
+            if (!empty($_SERVER['REQUEST_METHOD'])) {
+                $request->setType($_SERVER['REQUEST_METHOD']);
+            }
         }
         
         // Return request
@@ -156,6 +159,15 @@ class Request
     public function getType()
     {
         return $this->_type;
+    }
+    
+    /**
+     * Set type
+     * @param $type string type
+     */
+    public function setType($type)
+    {
+        $this->_type = $type;
     }
     
     /**
