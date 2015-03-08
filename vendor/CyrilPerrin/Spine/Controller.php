@@ -201,4 +201,43 @@ abstract class Controller
         );
     }
     
+    /**
+     * Get URL base
+     * @return string URL base
+     */
+    protected function getUrlBase()
+    {
+        return $this->_application->getRouter()->getUrlBase();
+    }
+     
+    /**
+     * Build URL
+     * @param $controllerName string controller name
+     * @param $actionName string action name
+     * @param $parameters array parameters
+     */
+    protected function buildUrl($controllerName,$actionName,$parameters=array())
+    {
+        return $this->_application->getRouter()->buildUrl(
+            $controllerName,
+            $actionName,
+            $parameters
+        );
+    }
+    
+    /**
+     * Use layout
+     * @param $layoutName string layout name
+     * @param $unwrap boolean unwrap view ?
+     */
+    protected function useLayout($layoutName, $unwrap=true)
+    {
+        while ($this->_view instanceof Layout) {
+            $this->_view = $this->_view->unwrap();
+        }
+        if ($layoutName !== null) {
+            $this->_view = $this->_view->wrap($layoutName);
+        }
+    }
+    
 }

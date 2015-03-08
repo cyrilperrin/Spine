@@ -14,7 +14,8 @@ class LayoutView extends Controller
      */
     public function layoutViewAction()
     {
-        $this->_view->wrap('LayoutView/layoutView')->render();
+        $this->useLayout('LayoutView/layoutView');
+        $this->_view->render();
     }
     
     /**
@@ -22,9 +23,10 @@ class LayoutView extends Controller
      */
     public function layoutViewWithParametersAction()
     {
+        $this->useLayout('LayoutView/layoutViewWithParameters');
         $this->_view->firstname = 'James';
         $this->_view->lastname = 'Bond';
-        $this->_view->wrap('LayoutView/layoutViewWithParameters')->render();
+        $this->_view->render();
     }
     
 }

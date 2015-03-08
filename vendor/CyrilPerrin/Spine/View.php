@@ -46,7 +46,7 @@ abstract class View
      * @param $parameters array parameters
      * @throws \CyrilPerrin\Spine\Interruption
      */
-    public function call($controllerName, $actionName, $parameters=array())
+    protected function call($controllerName, $actionName, $parameters=array())
     {
         // Create request
         $request = new Request($controllerName, $actionName, $parameters);
@@ -68,7 +68,7 @@ abstract class View
      * @param $widgetName string widget name
      * @param $parameters array parameters
      */
-    public function widget($widgetName,$parameters=array())
+    protected function widget($widgetName,$parameters=array())
     {
         // Create widget
         $widget = new Widget(
@@ -83,7 +83,7 @@ abstract class View
      * Get URL base
      * @return string URL base
      */
-    public function getUrlBase()
+    protected function getUrlBase()
     {
         return $this->_application->getRouter()->getUrlBase();
     }
