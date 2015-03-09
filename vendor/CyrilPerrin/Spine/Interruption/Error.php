@@ -15,16 +15,7 @@ class Error extends Interruption
 {
     /** @var $_application \CyrilPerrin\Spine\Application application */
     private $_application;
-    
-    /** @var $_statusCode int HTTP status code */
-    private $_statusCode;
-    
-    /** @var $_message string message */
-    private $_message;
-    
-    /** @var $_cause \Exception cause */
-    private $_cause;
-    
+   
     /**
      * Constructor
      * @param $application \CyrilPerrin\Spine\Application application
@@ -35,28 +26,20 @@ class Error extends Interruption
     public function __construct(Application $application, $message=null,
         $statusCode=200, $cause=null)
     {
+       
         // Set message if necessary
         if ($message == null) {
             // Get HTTP status
             $message = Response::getStatusByCode($statusCode);
         }
-        
+       
+        // Call parent constuctor
+        parent::__construct($message, $statusCode, $cause);
+       
         // Save attributes
         $this->_application = $application;
-        $this->_statusCode = $statusCode;
-        $this->_message = $message;
-        $this->_cause = $cause;
     }
-    
-    /**
-     * Get cause
-     * @return \Exception cause
-     */
-    public function getCause()
-    {
-        return $this->_cause;
-    }
-    
+   
     /**
      * @see \CyrilPerrin\Spine\Interruption::getResponse()
      */
@@ -66,31 +49,31 @@ class Error extends Interruption
             // Create request
             $request = new Request(
                 'Error', 'error', array(
-                    'message' => $this->_message,
-                    'cause' => $this->_cause
+                    'message' => $this->getMessage(),
+                    'cause' => $this->getPrevious()
                 )
             );
-        
+       
             // Get controller
             $controller = Controller::getInstance(
                 $this->_application, $request
             );
-            
+           
             // Run controller
             $response = $controller->run();
-            
+           
             // Set HTTP status code
-            $response->setStatusCode($this->_statusCode);
-            
+            $response->setStatusCode($this->getCode());
+           
             // Set exception
-            $response->setException($this->_cause);
+            $response->setException($this->getPrevious());
         } catch (Interruption $exception) {
             // Build response
             $response = new Response(
                 500, Response::getStatusByCode(500), $exception
             );
         }
-        
+       
         // Return response
         return $response;
     }
